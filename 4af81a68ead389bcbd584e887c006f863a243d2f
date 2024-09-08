@@ -1,0 +1,126 @@
+#!/system/bin/sh
+# cpu parameters
+chmod 0644 /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+echo "performance" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+chmod 0644 /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
+echo "performance" > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
+
+# ppm
+echo "1 2050000" > /proc/ppm/policy/hard_userlimit_max_cpu_freq
+echo "1 2050000" > /proc/ppm/policy/hard_userlimit_min_cpu_freq
+echo "0 2000000" > /proc/ppm/policy/hard_userlimit_max_cpu_freq
+echo "0 2000000" > /proc/ppm/policy/hard_userlimit_min_cpu_freq
+echo "2 0" > /proc/ppm/policy_status
+
+# Better Battery Efficient
+echo "N" > /sys/module/workqueue/parameters/power_efficient
+echo "N" > /sys/module/battery_saver/parameters/enabled
+echo "N" > /sys/module/workqueue/parameters/disable_numa
+echo "1" > /sys/devices/system/cpu/perf/enable 
+
+# fsync      
+echo "N" > /sys/module/sync/parameters/fsync_enabled
+   
+# scheduler
+echo "0" > /proc/sys/kernel/sched_migration_cost_ns
+echo "20" > /proc/sys/kernel/perf_cpu_time_max_percent
+echo "6-7" > /proc/irq/240/smp_affinity_list
+echo "3" > /proc/sys/vm/drop_caches
+
+echo "0" > /sys/block/mmcblk0/queue/add_random
+echo "0" > /sys/block/mmcblk0/queue/iostats
+echo "2" > /sys/block/mmcblk0/queue/nomerges
+echo "0" > /sys/block/mmcblk0/queue/rotational
+echo "2" > /sys/block/mmcblk0/queue/rq_affinity
+echo "128" > /sys/block/mmcblk0/queue/nr_requests
+echo "128" > /sys/block/mmcblk0/queue/read_ahead_kb
+
+echo "0" > /sys/block/sda/queue/add_random
+echo "0" > /sys/block/sda/queue/iostats
+echo "2" > /sys/block/sda/queue/nomerges
+echo "0" > /sys/block/sda/queue/rotational
+echo "2" > /sys/block/sda/queue/rq_affinity
+echo "128" > /sys/block/sda/queue/nr_requests
+echo "128" > /sys/block/sda/queue/read_ahead_kb
+
+echo "0" > /sys/block/sdb/queue/add_random
+echo "0" > /sys/block/sdb/queue/iostats
+echo "2" > /sys/block/sdb/queue/nomerges
+echo "0" > /sys/block/sdb/queue/rotational
+echo "2" > /sys/block/sdb/queue/rq_affinity
+echo "128" > /sys/block/sdb/queue/nr_requests
+echo "128" > /sys/block/sdb/queue/read_ahead_kb
+
+echo "0" > /sys/block/sdc/queue/add_random
+echo "0" > /sys/block/sdc/queue/iostats
+echo "2" > /sys/block/sdc/queue/nomerges
+echo "0" > /sys/block/sdc/queue/rotational
+echo "2" > /sys/block/sdc/queue/rq_affinity
+echo "128" > /sys/block/sdc/queue/nr_requests
+echo "128" > /sys/block/sdc/queue/read_ahead_kb
+
+# stune boost
+echo "0" > /dev/stune/background/schedtune.boost
+echo "0" > /dev/stune/foreground/schedtune.boost
+echo "40" > /dev/stune/rt/schedtune.boost
+echo "5" > /dev/stune/top-app/schedtune.boost
+echo "0" > /dev/stune/schedtune.boost
+echo "1" > /dev/stune/nnapi-hal/schedtune.boost
+echo "0" > /dev/stune/nnapi-hal/schedtune.prefer_idle
+echo "0" > /dev/stune/top-app/schedtune.prefer_idle
+echo "0" > /dev/stune/background/schedtune.prefer_idle
+echo "0" > /dev/stune/foreground/schedtune.prefer_idle
+echo "0" > /dev/stune/rt/schedtune.prefer_idle
+echo "0" > /dev/stune/schedtune.prefer_idle
+
+# power level
+echo "0" > /sys/devices/system/cpu/eas/enable
+echo "3" > /proc/cpufreq/cpufreq_power_mode
+echo "1" > /proc/cpufreq/cpufreq_imax_enable
+echo "0" > /proc/cpufreq/cpufreq_imax_thermal_protect
+echo "1" > /proc/cpufreq/cpufreq_cci_mode
+chmod '0444' /proc/cpufreq/cpufreq_cci_mode
+
+# proc mali
+echo "always_on" > /sys/class/misc/mali0/device/power_policy
+echo "1" > /proc/mali/always_on
+    
+# GED
+echo "1" > /sys/module/ged/parameters/gx_game_mode
+echo "1" > /sys/module/ged/parameters/gx_3D_benchmark_on
+echo "1" > /sys/module/ged/parameters/cpu_boost_policy
+echo "1" > /sys/module/ged/parameters/boost_extra
+echo "20000000" > /sys/module/ged/parameters/target_t_cpu_remained
+echo "1" > /sys/module/ged/parameters/enable_gpu_boost
+echo "1" > /sys/module/ged/parameters/ged_boost_enable
+echo "1" > /sys/module/ged/parameters/gx_boost_on
+echo "1" > /sys/module/ged/parameters/ged_smart_boost
+
+#gpu
+echo "806000" > /proc/gpufreq/gpufreq_opp_freq
+
+# Scheduler I/O
+echo "deadline" > /sys/block/mmcblk0/queue/scheduler
+echo "deadline" > /sys/block/sda/queue/scheduler
+echo "deadline" > /sys/block/sdb/queue/scheduler
+echo "deadline" > /sys/block/sdc/queue/scheduler
+
+# vm
+echo "0" > /proc/sys/vm/dirty_expire_centisecs
+echo "0" > /proc/sys/vm/dirty_writeback_centisecs
+echo "10" > /proc/sys/vm/vfs_cache_pressure
+echo "100" > /proc/sys/vm/swappiness
+echo "90" > /proc/sys/vm/dirty_ratio
+echo "70" > /proc/sys/vm/dirty_background_ratio
+echo "0" > /proc/sys/vm/laptop_mode
+echo "0" > /proc/sys/vm/page-cluster
+echo "20" > /proc/sys/vm/stat_interval
+
+# thermal
+echo "10" > /sys/class/thermal/thermal_message/sconfig
+
+# drop cache
+echo "3" > /proc/sys/vm/drop_caches
+
+# gms fix drain
+su -c "pm disable com.google.android.gms/.chimera.GmsIntentOperationService"
