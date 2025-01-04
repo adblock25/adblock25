@@ -1,0 +1,9 @@
+ota-property-files=metadata:69:321         
+ota-required-cache=0
+ota-type=BLOCK
+post-build=Redmi/angelica_global/angelica:10/QP1A.190711.020/V12.0.22.0.QCRMIXM:user/release-keys
+post-build-incremental=V12.0.22.0.QCRMIXM
+post-sdk-level=29
+post-security-patch-level=2022-06-01
+post-timestamp=1655116257
+pre-device=angelica
